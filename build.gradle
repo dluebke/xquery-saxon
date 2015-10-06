@@ -1,22 +1,46 @@
-defaultTasks "clean", "build"
+// todo
+// sources/javadoc
+// java source/traget version 1.7
+// proper release plugin
+// pom with required info
+// nexus-staging-maven-plugin
+// maven-gpg-plugin
+
+defaultTasks 'clean', 'build'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath "com.netflix.nebula:gradle-extra-configurations-plugin:3.0.2"
+    }
+}
 
 subprojects {
-    apply plugin: "java"
+    version '0.6-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'nebula.provided-base'
 
     repositories {
         mavenCentral()
     }
 
     ext {
-        saxonVersion = "9.6.0-7"
-        guavaVersion = "18.0"
-        commonsLangVersion = "3.4"
+        saxonVersion = '9.6.0-7'
+        guavaVersion = '18.0'
+        commonsLangVersion = '3.4'
     }
 
     test {
         testLogging {
-            events "passed", "skipped", "failed"
-            exceptionFormat "full"
+            events 'passed', 'skipped', 'failed'
+            exceptionFormat 'full'
             showCauses true
             afterSuite { desc, result ->
                 if (!desc.parent) {
