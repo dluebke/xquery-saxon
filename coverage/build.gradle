@@ -1,3 +1,5 @@
+description 'XQuery Saxon Coverage'
+
 dependencies {
     compile project(':support')
     provided "net.sf.saxon:Saxon-HE:$saxonVersion"
