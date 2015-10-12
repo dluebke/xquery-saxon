@@ -1,6 +1,4 @@
 // todo
-// sources/javadoc
-// java source/traget version 1.7
 // proper release plugin
 // pom with required info
 // nexus-staging-maven-plugin
@@ -21,11 +19,15 @@ buildscript {
 }
 
 subprojects {
+    group 'com.github.lizardev'
     version '0.6-SNAPSHOT'
 
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'nebula.provided-base'
+
+    sourceCompatibility = "1.7"
+    targetCompatibility = "1.7"
 
     repositories {
         mavenCentral()
@@ -48,5 +50,20 @@ subprojects {
                 }
             }
         }
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = "javadoc"
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
     }
 }
